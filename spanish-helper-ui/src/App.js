@@ -1,7 +1,8 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import ConjugationTable from './components/ConjugationTable';
+import ConjugationTable from './components/conjugationTable/ConjugationTable';
 import axios from 'axios';
+import AddVocabEntries from './components/addVocabEntry/AddVocabEntries';
 const SpanishVerbs = require('spanish-verbs');
 const baseURL = 'http://localhost:3001/api';
 const axiosInstance = axios.create({
@@ -113,6 +114,7 @@ function App() {
           <ConjugationTable word={word[currentIndex].spanish}></ConjugationTable>
         )}
       </div>
+      <AddVocabEntries></AddVocabEntries>
     </div>
   );
 };
