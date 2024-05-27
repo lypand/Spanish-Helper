@@ -1,0 +1,7 @@
+services:
+  app:
+    container_name: spanish-helper
+    build: .
+    ports:
+      - 3000:3000
+    command: npm start
