@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: backend
+    build: .
+    environment:
+      - DATABASE_URL=mongodb://database:27017/spanish_helper
+    ports:
+      - 3001:3001
+    command: npm start
+    volumes:
+      - .:/app
+  mongodb:
+    restart: always
+    container_name: database
+    image: mongodb/mongodb-community-server:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data:
+    external: true
