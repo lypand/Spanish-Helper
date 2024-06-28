@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import ConjugationTable from './components/conjugationTable/ConjugationTable';
 import axios from 'axios';
 import AddVocabEntries from './components/addVocabEntry/AddVocabEntries';
-const SpanishVerbs = require('spanish-verbs');
 const baseURL = 'http://localhost:3001/api';
 const axiosInstance = axios.create({
   baseURL: baseURL
