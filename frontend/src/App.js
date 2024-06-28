@@ -56,7 +56,7 @@ function App() {
     if (word.length !== 0) {
       speakWord(word[currentIndex].spanish);
     }
-  }, [currentIndex]);
+  }, [currentIndex, word]);
 
   const wordsLoaded = word.length > 0;
 
@@ -84,7 +84,7 @@ function App() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [word, currentIndex]);
+  }, [word, currentIndex, nextWord, previousWord]);
 
   useEffect(() => {
     fetchData();
