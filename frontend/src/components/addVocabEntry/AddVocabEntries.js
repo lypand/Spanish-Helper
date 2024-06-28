@@ -28,7 +28,7 @@ function AddVocabEntries() {
   }
 
   const handleMultiWordInputChange = (event) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     const array = value.split(',').map(item => item.trim());
     setMultiWordInput(array);
     console.log(array)
@@ -51,9 +51,9 @@ function AddVocabEntries() {
   }
 
   const submit = async () => {
-    const response = await axiosInstance.post(`/vocab_entries`, {
+    await axiosInstance.post(`/vocab_entries`, {
       ...formData
-    }).then(response => {
+    }).then(() => {
       setFormData({
         spanish: '',
         english: [],
@@ -81,9 +81,9 @@ function AddVocabEntries() {
         });
     }
 
-    const response = await axiosInstance.post(`/vocab_entries`, {
+    await axiosInstance.post(`/vocab_entries`, {
       ...formData
-    }).then(response => {
+    }).then(() => {
       setFormData({
         spanish: '',
         english: [],
