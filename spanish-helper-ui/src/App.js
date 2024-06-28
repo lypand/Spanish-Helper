@@ -16,10 +16,10 @@ function App() {
   const [displayEnglish, setDisplayEnglish] = useState(false);
 
   const nextWord = () => {
-    var nextIndex = currentIndex + 1;
-    if (nextIndex < word.length) {
-      setCurrentIndex(nextIndex);
-    }
+    let randomIndex = Math.floor(Math.random() * word.length);
+
+    console.log(randomIndex);
+    setCurrentIndex(randomIndex);
   };
 
   const previousWord = () => {
@@ -100,7 +100,25 @@ function App() {
             <p onClick={() => speakWord(word[currentIndex].spanish)}>
               {word[currentIndex].spanish}</p>
 
-            <p>{displayEnglish ? (word[currentIndex].english) : '-'}</p>
+            <ul>
+              {displayEnglish ? (word[currentIndex].english.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))) : '-'}
+            </ul>
+            <h5>
+              Sentence:
+            </h5>
+            <ul>
+              {(word[currentIndex].exampleSpanish.map((item, index) => (
+                <li key={index}>{item}</li>
+              )))}
+            </ul>
+            <ul>
+              {displayEnglish ? (word[currentIndex].exampleEnglish.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))) : '-'}
+            </ul>
+
           </div>
 
         )}

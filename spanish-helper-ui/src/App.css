@@ -1,7 +1,7 @@
 .vocab {
   display: grid;
   place-items: center;
-  height: 35vh;
+  height: 45vh;
   grid-template-columns: auto;
 }
 
