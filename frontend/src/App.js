@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ConjugationTable from './components/conjugationTable/ConjugationTable';
 import axios from 'axios';
 import AddVocabEntries from './components/addVocabEntry/AddVocabEntries';
@@ -14,19 +14,18 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayEnglish, setDisplayEnglish] = useState(false);
 
-  const nextWord = () => {
+  const nextWord = useCallback(() => {
     let randomIndex = Math.floor(Math.random() * word.length);
-
     console.log(randomIndex);
     setCurrentIndex(randomIndex);
-  };
+  }, [word]);
 
-  const previousWord = () => {
+  const previousWord = useCallback(() => {
     var previousIndex = currentIndex - 1;
     if (previousIndex >= 0) {
       setCurrentIndex(previousIndex);
     }
-  };
+  }, [currentIndex]);
 
   const fetchData = async () => {
     try {
