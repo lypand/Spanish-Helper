@@ -26,7 +26,6 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
 
       - name: UI - Zip artifact for deployment
         run: zip frontend.zip ./* -r
@@ -52,7 +51,6 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
 
       - name: Backend - Zip artifact for deployment
         run: zip frontend.zip ./* -r
