@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - spanishhelper
 
 on:
@@ -37,7 +34,7 @@ jobs:
           name: frontend-app
           path: ./frontend/build/frontend.zip
 
-build-backend:
+  build-backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -54,7 +51,7 @@ build-backend:
           npm install
           npm run build --if-present
 
-      - name: Zip frontend artifact
+      - name: Zip backend artifact
         working-directory: ./backend/build
         run: zip -r backend.zip .
 
@@ -62,10 +59,7 @@ build-backend:
         uses: actions/upload-artifact@v2
         with:
           name: backend-app
-          path: ./frontend/build/backend.zip
-
-
-
+          path: ./backend/build/backend.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -74,7 +68,7 @@ build-backend:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download frontend artifact
@@ -91,18 +85,16 @@ build-backend:
 
       - name: Unzip frontend artifact
         run: unzip frontend/frontend.zip -d frontend
-        working-directory: ${{ github.workspace }}
+
       - name: Clean up zip file
         run: rm frontend/frontend.zip
-        working-directory: ${{ github.workspace }}
 
       - name: Unzip backend artifact
         run: unzip backend/backend.zip -d backend
-        working-directory: ${{ github.workspace }}
+
       - name: Clean up zip file
         run: rm backend/backend.zip
-        working-directory: ${{ github.workspace }}        
-      
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -117,7 +109,7 @@ build-backend:
           app-name: 'spanishhelper'  # Replace with your Azure Web App name
           slot-name: 'Production'    # Replace with your Azure Web App slot name, if applicable
           package: frontend
-      
+
       - name: Deploy backend to Azure Web App
         id: deploy-backend
         uses: azure/webapps-deploy@v2
@@ -125,4 +117,3 @@ build-backend:
           app-name: 'spanishhelper'  # Replace with your Azure Web App name
           slot-name: 'Production'    # Replace with your Azure Web App slot name, if applicable
           package: backend
-          
