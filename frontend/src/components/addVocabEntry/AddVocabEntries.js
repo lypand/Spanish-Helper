@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './addVocabEntries.css';
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3001/api';
+const baseURL = process.env.Backend_Base_Url;
+console.log(process.env.Backend_Base_Url);
 const axiosInstance = axios.create({
   baseURL: baseURL
 });

@@ -4,6 +4,7 @@ import ConjugationTable from './components/conjugationTable/ConjugationTable';
 import axios from 'axios';
 import AddVocabEntries from './components/addVocabEntry/AddVocabEntries';
 const baseURL = process.env.Backend_Base_Url;
+console.log(process.env.Backend_Base_Url);
 const axiosInstance = axios.create({
   baseURL: baseURL
 });
