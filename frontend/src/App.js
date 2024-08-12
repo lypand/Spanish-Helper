@@ -3,8 +3,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import ConjugationTable from './components/conjugationTable/ConjugationTable';
 import axios from 'axios';
 import AddVocabEntries from './components/addVocabEntry/AddVocabEntries';
-const baseURL = process.env.Backend_Base_Url;
-console.log(process.env.Backend_Base_Url);
+const baseURL = process.env.REACT_APP_BACKEND_BASE_URL;
+console.log(process.env.REACT_APP_BACKEND_BASE_URL);
 const axiosInstance = axios.create({
   baseURL: baseURL
 });

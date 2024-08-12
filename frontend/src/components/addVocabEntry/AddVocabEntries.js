@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './addVocabEntries.css';
 import axios from 'axios';
 
-const baseURL = process.env.Backend_Base_Url;
-console.log(process.env.Backend_Base_Url);
+const baseURL = process.env.REACT_APP_BACKEND_BASE_URL;
+console.log(process.env.REACT_APP_BACKEND_BASE_URL);
 const axiosInstance = axios.create({
   baseURL: baseURL
 });
