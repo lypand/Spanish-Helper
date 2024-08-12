@@ -114,6 +114,6 @@ jobs:
         id: deploy-backend
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'Spanish-Helper'  # Replace with your Azure Web App name
+          app-name: 'spanish-helper-backend'  # Replace with your Azure Web App name
           slot-name: 'Production'    # Replace with your Azure Web App slot name, if applicable
           package: backend
