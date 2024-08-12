@@ -6,6 +6,10 @@ on:
       - develop
   workflow_dispatch:
 
+env: 
+  REACT_APP_BACKEND_BASE_URL: $
+  AZURE_COSMOS_CONNECTIONSTRING: $
+
 jobs:
   build-backend:
     runs-on: ubuntu-latest
