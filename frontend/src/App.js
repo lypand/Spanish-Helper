@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import ConjugationTable from './components/conjugationTable/ConjugationTable';
 import axios from 'axios';
 import AddVocabEntries from './components/addVocabEntry/AddVocabEntries';
-const baseURL = 'http://localhost:3001/api';
+const baseURL = process.env.Backend_Base_Url;
 const axiosInstance = axios.create({
   baseURL: baseURL
 });
