@@ -6,7 +6,8 @@ const app = express()
 const port = 3001
 
 require('dotenv').config();
-const mongoString = process.env.DATABASE_URL
+const mongoString = process.env.DATABASE_URL = process.env.AZURE_COSMOS_CONNECTIONSTRING
+
 mongoose.connect(mongoString);
 const database = mongoose.connection
 

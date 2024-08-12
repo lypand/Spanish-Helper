@@ -92,6 +92,7 @@ router.get('/vocab_entries', async (req, res) => {
     try {
         const data = await Model.find();
         res.json(data)
+        console.log(data)
     }
     catch (error) {
         res.status(500).json({ message: error.message })
