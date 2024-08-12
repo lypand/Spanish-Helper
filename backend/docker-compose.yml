@@ -6,7 +6,7 @@ services:
       - DATABASE_URL=mongodb://database:27017/spanish_helper
     ports:
       - 3001:3001
-    command: npm run startdocker
+    command: npm run start
     volumes:
       - .:/app
   mongodb:

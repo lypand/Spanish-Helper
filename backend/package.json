@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "startdocker": "node server.js"
+    "start": "node server.js",
+    "start-debug": "node server.js"
   },
   "keywords": [],
   "author": "",
