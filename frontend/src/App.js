@@ -1,137 +1,79 @@
 import './App.css';
 import React, { useEffect, useState, useCallback } from 'react';
-import ConjugationTable from './components/conjugationTable/ConjugationTable';
-import axios from 'axios';
 import AddVocabEntries from './components/addVocabEntry/AddVocabEntries';
-const baseURL = process.env.REACT_APP_BACKEND_BASE_URL;
-console.log(process.env.REACT_APP_BACKEND_BASE_URL);
-const axiosInstance = axios.create({
-  baseURL: baseURL
-});
+import VocabCard from './components/cards/VocabCard'
+import WordSelection from './components/wordSelection/WordSelection'
+import GlobalEventListener from './components/eventListeners/GlobalEventListener';
+import Header from './components/header/Header'
+import WordRepository from './components/externalRepository/WordRepository.jsx';
 
 function App() {
 
-  const [word, setWord] = useState([]);
+  const [words, setWord] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayEnglish, setDisplayEnglish] = useState(false);
+  const [allSentences, setAllSentences] = useState(false);
+  const [wordsLoaded, setWordsLoaded] = useState(false);
 
-  const nextWord = useCallback(() => {
-    let randomIndex = Math.floor(Math.random() * word.length);
-    console.log(randomIndex);
-    setCurrentIndex(randomIndex);
-  }, [word]);
+  const handleNext = () => {
+    var nextIndex = currentIndex + 1;
+    if (nextIndex < words.length) {
+      setCurrentIndex(nextIndex);
+    }
+  };
 
-  const previousWord = useCallback(() => {
+  const handleWordsLoaded = () => {
+    setWordsLoaded(true);
+  }
+
+  const handlePrevious = () => {
     var previousIndex = currentIndex - 1;
     if (previousIndex >= 0) {
       setCurrentIndex(previousIndex);
     }
-  }, [currentIndex]);
-
-  const fetchData = async () => {
-    try {
-      // Fetch data from the '/translations' endpoint
-      const response = await axiosInstance.get('/vocab_entries');
-      setWord(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const speakWord = (word) => {
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'es';
-    window.speechSynthesis.speak(utterance);
   };
 
-  const toggleEnglish = () => {
+  const handleSpeakWord = () => {
+    if (words.length !== 0) {
+      const utterance = new SpeechSynthesisUtterance(words[currentIndex].spanish);
+      utterance.lang = 'es';
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const handleSetWords = (data) => {
+    setWord(data);
+  }
+
+  const handleToggle = () => {
     setDisplayEnglish(previous => !previous);
   };
 
-  const hideEnglish = () => {
+  const handleToggleAllSentences = () => {
+    setAllSentences(previous => !previous);
+  }
+
+  const handleHideEnglish = () => {
     setDisplayEnglish(false);
   };
 
   useEffect(() => {
-    if (word.length !== 0) {
-      speakWord(word[currentIndex].spanish);
+    if (words.length !== 0) {
+      handleSpeakWord(words[currentIndex].spanish);
     }
-  }, [currentIndex, word]);
-
-  const wordsLoaded = word.length > 0;
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      console.log(event);
-      if (event.code === 'ArrowRight') {
-        hideEnglish();
-        nextWord();
-      }
-      if (event.code === 'ArrowLeft') {
-        hideEnglish();
-        previousWord();
-      }
-      if (event.code === 'Space') {
-        toggleEnglish();
-      }
-      if (event.code === 'ArrowUp') {
-        toggleEnglish();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [word, currentIndex, nextWord, previousWord]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  }, [currentIndex]);
 
   return (
-    <div className="app">
-      <h1>Spanish Helper</h1>
-      <div className='vocab'>
-        {wordsLoaded && (
-          <div>
-            <p onClick={() => speakWord(word[currentIndex].spanish)}>
-              {word[currentIndex].spanish}</p>
-
-            <ul>
-              {displayEnglish ? (word[currentIndex].english.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))) : '-'}
-            </ul>
-            <h5>
-              Sentence:
-            </h5>
-            <ul>
-              {(word[currentIndex].exampleSpanish.map((item, index) => (
-                <li key={index}>{item}</li>
-              )))}
-            </ul>
-            <ul>
-              {displayEnglish ? (word[currentIndex].exampleEnglish.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))) : '-'}
-            </ul>
-
-          </div>
-
-        )}
-        <div className="buttons">
-          <button onClick={nextWord}>Next Word</button>
-          <button onClick={toggleEnglish}>Show English</button>
-        </div>
+    <div className='header'>
+      <WordRepository onLoad={handleWordsLoaded} onSpeak={handleSpeakWord} onSetWords={handleSetWords}></WordRepository>
+      <Header ontoggleAllSentences={handleToggleAllSentences} onHideEnglish={handleHideEnglish} ></Header>
+      <div className="app">
+        <h1>Spanish Helper</h1>
+        <VocabCard wordInfo={words[currentIndex]} wordsLoaded={wordsLoaded} displayEnglish={displayEnglish} allSentences={allSentences}></VocabCard>
+        <WordSelection onNext={handleNext} onToggle={handleToggle} onPrevious={handlePrevious}></WordSelection>
+        <AddVocabEntries></AddVocabEntries>
+        <GlobalEventListener onNext={handleNext} onToggle={handleToggle} onPrevious={handlePrevious}></GlobalEventListener>
       </div>
-      <div className="conjugation-table-wrapper">
-        {wordsLoaded && (
-          <ConjugationTable word={word[currentIndex].spanish}></ConjugationTable>
-        )}
-      </div>
-      <AddVocabEntries></AddVocabEntries>
     </div>
   );
 };

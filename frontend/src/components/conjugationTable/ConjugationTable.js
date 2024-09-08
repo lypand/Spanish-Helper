@@ -88,24 +88,24 @@ function ConjugationTable({ word }) {
 
   return (
     <div className="p-2">
-      <table>
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        {displayConjugations && (
+      {displayConjugations && (
+        <table>
+          <thead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <th key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
           <tbody>
             {table.getRowModel().rows.map(row => (
               <tr key={row.id}>
@@ -117,8 +117,8 @@ function ConjugationTable({ word }) {
               </tr>
             ))}
           </tbody>
-        )}
-      </table>
+        </table>
+      )}
     </div>
   )
 }

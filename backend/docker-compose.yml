@@ -3,7 +3,7 @@ services:
     container_name: backend
     build: .
     environment:
-      - DATABASE_URL=mongodb://database:27017/spanish_helper
+      - AZURE_COSMOS_CONNECTIONSTRING=mongodb://database:27017/spanish_helper
     ports:
       - 3001:3001
     command: npm run start
